@@ -69,6 +69,25 @@ let popupLogic = {
   //Последняя кнопка
   lastHeader: 'Спасибо!',
 
+  changeColorAndSave() {
+    let elements = document.querySelectorAll('.popup-main__messenger');
+        for (let i = 0; i < elements.length; i++) { 
+            elements[i].addEventListener('click', function() {
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('active');
+                }
+                this.classList.add('active');
+
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i].classList[2] === 'active') {
+                        sessionStorage.setItem('1', elements[i].children[1].textContent);
+                        sessionStorage.setItem('i1', i);
+                    }
+                }
+            })
+        }
+    },
+
   //Сохранение в sessionStorage. Формирует два массива для отправки и для внутреннего пользования
   //проверяет на пустоту, чтобы не затереть имеющиеся данные
   saveCache() {
@@ -137,6 +156,9 @@ let popupLogic = {
       ++popupLogic.status;
       popupLogic.render();
     }
+    if (popupLogic.status === 1) {
+        popupLogic.changeColorAndSave();
+    }
   },
   //Примерно тоже самое, что и next, только в обратную сторону
   prev() {
@@ -156,6 +178,10 @@ let popupLogic = {
       --popupLogic.status;
       popupLogic.render();
     }
+    if (popupLogic.status === 1) {
+        popupLogic.changeColorAndSave()
+        popupLogic.loadCache();
+      }
   },
   //Отправка формы (не дописал)
   sendForm() {
@@ -175,7 +201,6 @@ let popupLogic = {
 
     if (popupLogic.status > 1) {
       allRadios.setAttribute('style', 'display: flex');
-      // popupLogic.unSelect();
 
       for(let i=0;i<popupLogic.radios[popupLogic.status].length;++i) {
         let input = document.createElement('input'),
@@ -280,9 +305,9 @@ let popupLogic = {
         });
   },
     //Закрывает форму
-//   close() {
-//     document.querySelector('.popup-main').remove();
-//   },
+  close() {
+    document.querySelector('.popup-main').remove();
+  },
   //Недоработанная функция, которая отменяет чек бокс
   unSelect() {
       function select(ev) {

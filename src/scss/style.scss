@@ -105,6 +105,9 @@ label {
   justify-content: center;
   align-items: center;
 }
+.active {
+  border: 1px solid yellow;
+}
 .popup-main__messenger img {
   width: 78px;
   height: 77px;
@@ -398,4 +401,7 @@ input[type=radio]:checked + label::before {
 }
 .popup-second__viber {
   background-image: url(/img/viberLogo.png);
+}
+hidden {
+  display: none;
 }
