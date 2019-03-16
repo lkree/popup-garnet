@@ -24,9 +24,11 @@ $(function() {
       type: 'POST',
       success: function(data) {
         console.log(data);
+        sessionStorage.clear();
         popupLogic.final();
       },
       error: function() {
+        sessionStorage.clear();
         popupLogic.final();
       }
     });
