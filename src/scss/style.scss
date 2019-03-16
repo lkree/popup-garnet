@@ -1,23 +1,28 @@
 @import "../../node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css";
-$font-stack: -apple-system, BlinkMacSystemFont, Roboto, "Open Sans", "Helvetica Neue", sans-serif;
-
-@import "~bootstrap/scss/bootstrap";
 
 @font-face {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: 'Calibri';
+  src:  url('../fonts/Calibri.ttf') format('truetype');
   font-weight: 400;
-  src: url(../fonts/Roboto-Regular.ttf);
+  font-style: normal;
 }
-
 @font-face {
-  font-family: "Museo Sans Cyrl -300";
-  src: url(../fonts/MuseoSansCyrl_0.otf);
+  font-family: 'MuseoSans';
+  src:  url('../fonts/MuseoSansLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MuseoSans';
+  src:  url('../fonts/MuseoSansMedium.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: none;
 }
 body {
   display: flex;
@@ -25,25 +30,38 @@ body {
   align-items: center;
   width: 100%;
   height: 99vh;
+  font-family: MuseoSans;
+  font-weight: 300;
 }
 label {
   margin-bottom: 0;
 }
+input[type="button" i], input[type="submit"], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button {
+  border: 0;
+  padding: 0;
+}
 .fancybox-content {
   padding: 0;
+  background: none;
   overflow: hidden;
 }
 .fancybox-button svg path {
   fill: white;
 }
+.popup-second + .fancybox-button svg path {
+  fill: #959495;
+}
+.fancybox-button:hover svg path {
+  opacity: 1;
+}
 .popup-main {
-  background-color: #fff;
   display: flex;
   height: 520px;
   width: 960px;
   box-shadow: 0px 0px 10px 1px #000;
 }
 .popup-main__left {
+  background: white;
   width: 660px;
   padding: 60px 73px 65px;
   display: flex;
@@ -58,21 +76,20 @@ label {
 }
 .popup-main__page {
   width: 66px;
-  height: 12px;
   color: #979fbb;
-  font-family: "Museo Sans Cyrl -300 Italic";
+  font-family: "MuseoSans";
   font-size: 14px;
-  font-weight: 400;
-  line-height: 36px;
+  font-weight: 300;
+  line-height: 1.1;
   letter-spacing: 0.35px;
-  margin-bottom: 19px;
+  margin-bottom: 15px;
 }
 .popup-main__header {
   text-align: center;
   margin-bottom: 30px;
-  font-weight: 400;
+  font-weight: 300;
   color: #2b2e3b;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 30px;
   line-height: 34px;
   letter-spacing: 0.75px;
@@ -84,40 +101,55 @@ label {
   display: none;
   text-align: center;
   color: #5b607e;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 26px;
   letter-spacing: 0.45px;
 }
+.popup-main__content .first-p {
+  display: block;
+}
 .popup-main__messengers {
   display: none;
+}
+.popup-main__messengers-container {
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .popup-main__messenger {
   width: 160px;
   margin-left: 30px;
   height: 160px;
   border-radius: 4px;
-  border: 1px solid #5b607e;
-  background-color: #ffffff;
+  border: 1px solid #dedfe5;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+.popup-main__messenger:first-child {
+  margin-left: 0;
 }
 .active {
-  border: 1px solid yellow;
+  border: 1px solid #adafbe;
+  box-shadow: 0 2px 24px rgba(37, 38, 46, 0.2);
 }
 .popup-main__messenger img {
   width: 78px;
+  margin-bottom: 5px;
   height: 77px;
 }
 
 .popup-main__messenger div {
   color: #565a6f;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 26px;
   letter-spacing: 0.4px;
 }
@@ -131,9 +163,9 @@ label {
 
 }
 .popup-main__telegram img {
-  width: 64px;
-  height: 63px;
-  margin-bottom: 9px;
+  width: 70px;
+  height: 71px;
+  margin-bottom: 11px;
 }
 .popup-main__radios {
   display: none;
@@ -143,9 +175,9 @@ label {
 }
 .popup-main__radios label {
   color: #5b607e;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.4px;
   padding: 10px 0 10px 35px;
   margin-left: 15px;
@@ -162,38 +194,61 @@ label::before {
   width: 24px;
   height: 24px;
   border-radius: 4px;
-  border: 1px solid gray;
+  border: 1px solid #cecfd8;
   position: absolute;
   left: 0;
   bottom: 7px;
   background-color: #fff;
 }
   
-input[type=radio]:checked + label::before {
-  content: '\2713';
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
-  font-size: 15px;
-  color: blue;
-  text-align: center;
+input[type=radio]:checked + label:after {
+  content: '';
+  width: 13px;
+  height: 12px;
+  position: absolute;
+  left: 7px;
+  top: 13px;
+  background: url(../img/arrow.svg);
+  background-size: 100%;
 }
-  
-.popup-main__btn {
+input[type=radio]:checked + label {
+  color: #2a2c3a;
+}
+input[type=radio].popup-main__radio--multiply[checked1='1'] + label {
+  color: #2a2c3a;
+}
+input[type=radio].popup-main__radio--multiply[checked1='2'] + label {
+  color: #5b607e;
+}
+input[type=radio].popup-main__radio--multiply[checked1='1'] + label:after {
+  content: '';
+  width: 13px;
+  height: 12px;
+  position: absolute;
+  left: 7px;
+  top: 13px;
+  background: url('../img/arrow.svg');
+  background-size: 100%;
+}
+input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
+  content: none;
 
 }
+
 .popup-main__btn-prev {
   display: none;
   border: none;
-  border-bottom: 1px dashed #000;
-  width: 48px;
+  border-bottom: 1px dashed #5b607e;
   color: #5b607e;
   font-family: Calibri;
   font-size: 16px;
   font-weight: 400;
-  line-height: 32px;
+  line-height: 1.3;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   background-color: transparent;
   margin-right: 31px;
+  cursor: pointer;
 }
 .popup-main__btn-main {
   border: none;
@@ -201,10 +256,6 @@ input[type=radio]:checked + label::before {
   text-transform: uppercase;
   padding: 20px 71px;
   border-radius: 16px;
-  -webkit-border-radius: 16px;
-  -moz-border-radius: 16px;
-  -ms-border-radius: 16px;
-  -o-border-radius: 16px;
   width: 220px;
   height: 64px;
   box-shadow: 0 3px 24px rgba(254, 83, 57, 0.4);
@@ -212,7 +263,13 @@ input[type=radio]:checked + label::before {
   background-image: linear-gradient(to top, rgba(254, 83, 57, 0.2) 0%, rgba(228, 204, 72, 0.2) 100%);
   font-family: Calibri;
   font-size: 18px;
+  transition: box-shadow .2s;
   letter-spacing: 1px;
+  cursor: pointer;
+  transition: box-shadow .2s;
+}
+.popup-main__btn-main:hover {
+  box-shadow: none;
 }
 .popup-main__right {
   background-color: #2c2a2b;
@@ -245,7 +302,7 @@ input[type=radio]:checked + label::before {
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
-  background: url(/img/manager.png) no-repeat center;
+  background: url('./../img/manager.png') no-repeat center;
 }
 .popup-main__manager-info {
   display: flex;
@@ -256,14 +313,15 @@ input[type=radio]:checked + label::before {
   color: #fff;
   margin-bottom: 5px;
   width: 113px;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 300;
 }
 .popup-main__manager-status {
+  font-weight: 300;
   color: #8a8487;
-  font-family: "Museo Sans Cyrl -100";
-  font-size: 14px;
+  font-family: "MuseoSans";
+  font-size: 13px;
   letter-spacing: 0.35px;
   line-height: 26px;
 }
@@ -274,16 +332,15 @@ input[type=radio]:checked + label::before {
   display: flex;
   padding: 30px 32px 30px 21px;
   color: #bdb2b7;
-  font-family: "Museo Sans Cyrl -100";
+  font-family: "MuseoSans";
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 20px;
   letter-spacing: 0.35px;
   border: 1px solid #5b5759;
   justify-content: center;
   align-items: center;
   position: relative;
-  /* background: url('/img/questionBorder.png') no-repeat; */
 }
 .popup-main__manager-question div {
   position: absolute;
@@ -309,14 +366,11 @@ input[type=radio]:checked + label::before {
   background-color: #ffffff;
   padding: 96px 110px 111px 80px;
 }
-.popup-second__main {
-
-}
 .popup-second__header {
   color: #2b2e3b;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 32px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.8px;
   text-align: center;
   margin-bottom: 35px;
@@ -324,14 +378,15 @@ input[type=radio]:checked + label::before {
 .popup-second__description {
   display: none;
   color: #2b2e3b;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.45px;
   text-align: center;
   margin-bottom: 30px;
 }
 .popup-second__finalClose {
+  cursor: pointer;
   display: none;
   width: 200px;
   height: 56px;
@@ -345,22 +400,30 @@ input[type=radio]:checked + label::before {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0 auto;
+  transition: box-shadow .2s;
+}
+.popup-second__finalClose:hover {
+  box-shadow: none;
 }
 .popup-second__form {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  align-items: center;
 }
 .popup-second__input {
   color: #5b607e;
-  font-family: "Museo Sans Cyrl -100";
+  font-family: "MuseoSans";
   font-size: 32px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.8px;
   border: none;
   border-bottom: 1px solid gray;
   margin-bottom: 34px;
+  text-align: center;
 }
 .popup-second__submit {
+  cursor: pointer;
   width: 280px;
   height: 56px;
   box-shadow: 0 3px 24px rgba(254, 83, 57, 0.4);
@@ -374,10 +437,13 @@ input[type=radio]:checked + label::before {
   letter-spacing: 1px;
   margin-bottom: 35px;
 }
+.popup-second__submit:hover {
+  box-shadow: none;
+}
 .popup-second__hint {
   text-align: center;
   color: #8a8487;
-  font-family: "Museo Sans Cyrl -300";
+  font-family: "MuseoSans";
   font-size: 14px;
   font-weight: 100;
   letter-spacing: 0.35px;
@@ -393,15 +459,69 @@ input[type=radio]:checked + label::before {
   height: 30px;
   margin-left: 10px;
 }
+.popup-second__socialBtn:first-child {
+  margin-left: 0;
+}
 .popup-second__telegram {
-  background-image: url(/img/telegramLogo.png);
+  background-image: url('/img/telegramLogo.png');
 }
 .popup-second__whatsup {
-  background-image: url(/img/whatsupLogo.png);
+  background-image: url('/img/whatsupLogo.png');
 }
 .popup-second__viber {
-  background-image: url(/img/viberLogo.png);
+  background-image: url('/img/viberLogo.png');
 }
 hidden {
   display: none;
+}
+
+@media (max-width: 980px) {
+  .popup-main__right {
+    display: none !important;
+  }
+  .popup-main {
+    width: 100%;
+  }
+  .popup-main {
+    height: auto;
+  }
+  .popup-main__left {
+    max-width: 660px;
+    width: 100%;
+    border-radius: 4px;
+    padding: 40px 20px;
+  }
+  .popup-second {
+    padding: 40px 20px;
+    max-width: 660px;
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 580px) {
+  .popup-main__messenger {
+    width: 80px;
+    margin-left: 20px;
+    height: 100px;
+  }
+  .popup-main__messenger div {
+    font-size: 13px;
+  }
+  .popup-main__messenger img {
+    width: 62px;
+    height: 61px;
+  }
+  .popup-main__messenger img {
+    width: 55px;
+    height: 55px;
+  }
+  .popup-main__radios {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (max-width: 380px) {
+  .popup-main__btn-prev {
+    margin-right: 10px;
+  }
 }
