@@ -33,42 +33,68 @@
       </div>
       <div class="popup-main__btn">
       <button class="popup-main__btn-prev">Назад</button>
-      <button class="popup-main__btn-main">Начать!</button>
+      <button class="popup-main__btn-main activeBtn">Начать!</button>
     </div>
     </div>
     <div class="popup-main__right">
       <div class="popup-main__manager">
         <div class="popup-main__manager-photo"></div>
         <div class="popup-main__manager-info">
-          <span class="popup-main__manager-name">Елизавета Светличная</span>
+          <span class="popup-main__manager-name">Виктория Чистова</span>
           <span class="popup-main__manager-status">Ваш консультант</span>
         </div>
       </div>
       <div class="popup-main__manager-question">
-        <p>Здравствуйте, вы готовы начать подбор?</p>
+        <p>Здравствуйте! Я прокомментирую для вас вопросы и варианты ответов.</p>
         <div>
           <svg height="12" width="20">
               <path d="m0 20 h20 l -10 -20 z" fill="transparent" stroke="#5b5759" />
           </svg>
+        </div>
       </div>
+      <div class="popup-main__bonus">
+        <p class="popup-main__bonus-text">Бонусы после прохождения теста:</p>
+          <a class="bonus">
+            <p class="bonus__text"><span>Каталог</span> лофтов Москвы</p>
+            <div class="bonus__closeIcon"></div>
+          </a>
       </div>
     </div>
+  </section>
+  <section class="spinner">
+    <div></div>
+  </section>
+  <section class="popup-second popup-second--preSecond">
+    <div class="popup-second__header popup-second__header--preSecond">
+        Спасибо за ответы!
+    </div>
+    <p class="popup-second__description popup-second__description--preSecond">
+        В нашей базе есть лофты по вашим параметрам &mdash; подборка уже формируется. Осталось узнать ваш номер телефона для отправки ее в мессенджер.
+    </p>
+    <p class="popup-second__bonus-text popup-second__bonus-text--preSecond">Получите ваши бонусы далее:</p>
+    <a class="bonus">
+      <p class="bonus__text"><span>Каталог</span> лофтов Москвы</p>
+      <div class="bonus__closeIcon"></div>
+    </a>
+    <button class="popup-second__submit popup-second__submit--preSecond activeBtn">Оставить номер</button>
   </section>
   <section class="popup-second">
     <div class="popup-second__main">
       <div class="popup-second__header">Оставьте номер телефона для отправки результата</div>
-      <p class="popup-second__description">Мы обработаем вашу заявку, и в скорейшем времени пришлем подборку</p>
-      <button class="popup-second__finalClose">Закрыть</button>
+      <p class="popup-second__description">Спасибо! Ваша зявка уже в работе, подборка будет готова сегодня.</p>
       <form class="popup-second__form" action="" method="POST">
         <input required class="popup-second__input input--phone" type="tel">
         <input class="popup-second__submit" type="submit" value="Получить подборку">
       </form>
-      <div class="popup-second__hint">или используйте мессенджер</div>
-      <div class="popup-second__socials">
-        <a class="popup-second__telegram popup-second__socialBtn" href="#"></a>
-        <a class="popup-second__whatsup popup-second__socialBtn" href="#"></a>
-        <a class="popup-second__viber popup-second__socialBtn" href="#"></a>
-      </div>
+      <input type="radio" class="popup-main__radio" id="lastInpt">
+      <label for="lastInpt" class="popup-main__label" id="lastLabel">
+        С политикой конфеденциальности ознакомлен
+      </label>
+      <p class="popup-second__bonus-text">Ваши бонусы:</p>
+      <a class="bonus">
+        <p class="bonus__text"><span>Каталог</span> лофтов Москвы</p>
+        <div class="bonus__closeIcon"></div>
+      </a>
     </div>
   </section>
 </div>

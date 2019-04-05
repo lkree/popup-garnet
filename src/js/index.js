@@ -45,7 +45,7 @@ $(function() {
     headers: [
       'Подберем 15 лучших предложений под ваши задачи',
       'В какой мессенджер вам прислать подборку',
-      'С какой целью вы покупаете объект?',
+      'Как вы хотите использовать лофт?',
       'Где вы хотите купить объект?',
       'Выберите желаемую площадь',
       'Выберите количество спален',
@@ -56,7 +56,7 @@ $(function() {
     ],
     //Массив речей менеджера
     managerSpeachs: [
-      'Здравствуйте, вы готовы начать подбор?',
+      'Здравствуйте! Я прокомментирую для вас вопросы и варианты ответов.',
       'Выберите удобное для вас приложение',
       'Выберите, что соответствует вашим целям',
       'Выберите подходящие районы Москвы или укажите свой вариант',
@@ -181,12 +181,13 @@ $(function() {
       if (popupLogic.status === 0) {
         ++status;
         popupLogic.render();
+        document.addEventListener('click', popupLogic.setBtnActive);
       }
       if (popupLogic.status === 9) {
         popupLogic.saveCache();
         popupLogic.close();
-        popupLogic.preFinal();
         ++popupLogic.status;
+        popupLogic.preFinal();
         return;
       }
       if (popupLogic.status > 1) {
@@ -208,6 +209,56 @@ $(function() {
       if (popupLogic.status === 1) {
         popupLogic.changeColorAndSave();
       }
+    },
+    setBtnActive: function() {
+      let confirmBtn = document.querySelector('.popup-main__btn-main'),
+          checkbox;
+
+      if (popupLogic.status === 0) {
+        confirmBtn.classList.add('activeBtn');        confirmBtn.addEventListener('click', popupLogic.next);
+      }
+
+      if (popupLogic.status === 1) {
+        confirmBtn.removeEventListener('click', popupLogic.next);
+        confirmBtn.classList.remove('activeBtn');
+        let checkBoxes = document.querySelectorAll('.popup-main__messenger');
+
+        doActiveBtn(checkBoxes);
+      }
+
+      if (popupLogic.status > 1 && popupLogic.status <= 9) {
+        confirmBtn.removeEventListener('click', popupLogic.next);
+        confirmBtn.classList.remove('activeBtn');
+        let radios = document.querySelectorAll('.popup-main__radio');
+
+        doActiveBtn(radios);
+      }
+
+      if (popupLogic.status === 11) {
+        let confirmBtn = document.querySelectorAll('.popup-second__submit')[1];
+        confirmBtn.classList.remove('activeBtn');
+
+        let checkbox = document.querySelector('#lastInpt'),
+            input = document.querySelector('.input--phone');
+
+        if (input.value[input.value.length - 2] >= 0) {
+          checkbox.checked = true;
+          confirmBtn.classList.add('activeBtn');
+        }
+
+      }
+
+      function doActiveBtn(checkBoxes) {
+        for (checkbox of checkBoxes) {
+          if (checkbox.classList.contains('active') ||
+              checkbox.checked == true ||
+              checkbox.getAttribute('checked1') == 1) {
+            confirmBtn.classList.add('activeBtn');
+            confirmBtn.addEventListener('click', popupLogic.next);
+          }
+        }
+      }
+
     },
     //Примерно тоже самое, что и next, только в обратную сторону
     prev() {
@@ -242,7 +293,16 @@ $(function() {
         messengers = document.querySelector('.popup-main__messengers'),
         contentPar = document.querySelector('.popup-main__content p'),
         goOnButton = document.querySelector('.popup-main__btn-main'),
-        allRadios = document.querySelector('.popup-main__radios');
+        allRadios = document.querySelector('.popup-main__radios'),
+        label;
+
+      function roundLabel() {
+        let labels = document.querySelectorAll('.popup-main__radios label');
+
+        for (label of labels) {
+          label.classList.toggle('round-label');
+        }
+      }
 
       if (popupLogic.status > 1) {
         allRadios.setAttribute('style', 'display: flex');
@@ -307,50 +367,77 @@ $(function() {
       header.textContent = popupLogic.headers[popupLogic.status];
 
       popupLogic.unSelect();
+      if (popupLogic.status === 2) {
+        roundLabel();
+      }
+      console.log(popupLogic.status);
     },
     //Запускает предпоследнее окно с вводом номера
     //Создает массив на отправку
     preFinal() {
-      let preFinal = document.querySelector('.popup-second'),
-        temp,
-        tempArr,
-        sendArray = [];
+      let phonePopup = document.querySelectorAll('.popup-second')[1],
+          spinner = document.querySelector('.spinner'),
+          thnxPopup = document.querySelector('.popup-second--preSecond'),
+          temp,
+          tempArr,
+          sendArray = [];
 
-      preFinal.setAttribute('style', 'display: block');
+      if (popupLogic.status === 10) {
+        spinner.style.display = 'flex';
+        let close = document.querySelector('.fancybox-close-small');
+        close.style.display = 'none';
+        setTimeout(function() {
+          close.style.display = 'block';
+          spinner.style.display = 'none';
+          thnxPopup.style.display = 'flex';
+          ++popupLogic.status;
 
-      for (let i = 0; i < 10; i++) {
-        if (sessionStorage.getItem(i) !== null) {
-          tempArr = sessionStorage.getItem(i).split();
+          let confirm = document.querySelector('.popup-second__submit--preSecond');
 
-          if (tempArr.indexOf(',') !== -1) {
-            sendArray[i] = (sessionStorage.getItem(i));
-          } else {
-            temp = sessionStorage.getItem(i).split(',');
-            sendArray[i] = temp;
+          confirm.addEventListener('click', function() {
+            thnxPopup.style.display = 'none';
+            popupLogic.preFinal();
+          });
+        }, 6000);
+        return;
+      } else {
+        document.addEventListener('keydown', popupLogic.setBtnActive);
+        phonePopup.setAttribute('style', 'display: block');
+        // bonus.style.display = 'none';
+  
+        for (let i = 0; i < 10; i++) {
+          if (sessionStorage.getItem(i) !== null) {
+            tempArr = sessionStorage.getItem(i).split();
+  
+            if (tempArr.indexOf(',') !== -1) {
+              sendArray[i] = (sessionStorage.getItem(i));
+            } else {
+              temp = sessionStorage.getItem(i).split(',');
+              sendArray[i] = temp;
+            }
           }
         }
+        popupLogic.arrToSend = sendArray;
       }
-      popupLogic.arrToSend = sendArray;
     },
     //Запускает последнее окно, закрывая все предыдущие
     final() {
-      $('.popup-second').css({'height' : '360px', 'padding-top' : '80px'});
+      $('.popup-second').css({'height' : '360px', 'padding' : '80px 165px 111px 175px'});
       let form = document.querySelector('.popup-second__form'),
-        hint = document.querySelector('.popup-second__hint'),
-        socials = document.querySelector('.popup-second__socials'),
         description = document.querySelector('.popup-second__description'),
-        header = document.querySelector('.popup-second__header'),
-        closeBtn = document.querySelector('.popup-second__finalClose');
+        header = document.querySelectorAll('.popup-second__header')[1],
+        bonus = document.querySelectorAll('.bonus')[1],
+        bonusText = document.querySelector('.popup-second__bonus-text'),
+        lastLabel = document.querySelector('#lastLabel');
 
       form.setAttribute('style', 'display: none');
-      hint.setAttribute('style', 'display: none');
-      socials.setAttribute('style', 'display: none');
+      bonus.style.display = 'block';
+      bonus.href = '#';
+      bonus.children[1].style.display = 'none';
+      bonusText.style.display = 'block';
+      lastLabel.style.display = 'none';
       description.setAttribute('style', 'display: block');
       header.textContent = 'Спасибо!';
-      closeBtn.setAttribute('style', 'display: block');
-      closeBtn.addEventListener('click', ev => {
-        $.fancybox.close();
-      });
     },
     //Закрывает форму
     close() {
@@ -384,8 +471,4 @@ $(function() {
 
   startupButton.addEventListener('click', popupLogic.next);
   prevButton.addEventListener('click', popupLogic.prev);
-
-
-
 });
-
