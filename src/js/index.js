@@ -23,7 +23,6 @@ $(function() {
       processData: false,
       type: 'POST',
       success: function(data) {
-        console.log(data);
         sessionStorage.clear();
         popupLogic.final();
       },
@@ -239,7 +238,7 @@ $(function() {
         confirmBtn.classList.remove('activeBtn');
 
         let checkbox = document.querySelector('#lastInpt'),
-            input = document.querySelector('.input--phone');
+          input = document.querySelector('.input--phone');
 
         if (input.value[input.value.length - 2] >= 0) {
           checkbox.checked = true;
@@ -313,8 +312,12 @@ $(function() {
 
           if (
             popupLogic.status === 3 ||
+            popupLogic.status === 4 ||
             popupLogic.status === 5 ||
-            popupLogic.status === 6
+            popupLogic.status === 6 ||
+            popupLogic.status === 7 ||
+            popupLogic.status === 8 ||
+            popupLogic.status === 9
           ) {
             input.name = i;
             input.classList.add('popup-main__radio--multiply');
@@ -370,7 +373,6 @@ $(function() {
       if (popupLogic.status === 2) {
         roundLabel();
       }
-      console.log(popupLogic.status);
     },
     //Запускает предпоследнее окно с вводом номера
     //Создает массив на отправку
@@ -422,9 +424,9 @@ $(function() {
     },
     //Запускает последнее окно, закрывая все предыдущие
     final() {
-      $('.popup-second').css({'height' : '360px', 'padding' : '80px 165px 111px 175px'});
+      $('.popup-second').css({'height' : '360px', 'padding' : '55px 10px 111px 10px'});
       let form = document.querySelector('.popup-second__form'),
-        description = document.querySelector('.popup-second__description'),
+        description = document.querySelectorAll('.popup-second__description')[1],
         header = document.querySelectorAll('.popup-second__header')[1],
         bonus = document.querySelectorAll('.bonus')[1],
         bonusText = document.querySelector('.popup-second__bonus-text'),
@@ -450,11 +452,9 @@ $(function() {
         if ($input.getAttribute('checked1')) {
           if ($input.getAttribute('checked1') === '1') {
             $input.setAttribute('checked1', 2)
-            console.log($input.getAttribute('checked1'))
           }
           else {
             $input.setAttribute('checked1', 1)
-            console.log($input.getAttribute('checked1'))
           }
           return;
         }

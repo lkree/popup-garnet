@@ -103,7 +103,7 @@ input[type="button" i], input[type="submit"], input[type="reset" i], input[type=
   color: #5b607e;
   font-family: "MuseoSans";
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 26px;
   letter-spacing: 0.45px;
 }
@@ -175,7 +175,6 @@ input[type="button" i], input[type="submit"], input[type="reset" i], input[type=
 }
 .popup-main__label {
   color: #5b607e;
-  // color: #2b2e3b;
   font-family: "MuseoSans";
   font-size: 16px;
   font-weight: 400;
@@ -202,7 +201,7 @@ input[type="button" i], input[type="submit"], input[type="reset" i], input[type=
   background-color: #fff;
 }
 #lastLabel {
-  margin-bottom: 23px;
+  margin-bottom: 10px;
 }
 .popup-main__radio:checked + .popup-main__label:after {
   content: '';
@@ -259,11 +258,7 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   text-transform: uppercase;
   padding: 20px 71px;
   border-radius: 16px;
-  width: 220px;
-  height: 64px;
-  box-shadow: 0 3px 24px rgba(254, 83, 57, 0.4);
-  background-color: gray;
-  // background-image: linear-gradient(to top, rgba(254, 83, 57, 0.2) 0%, rgba(228, 204, 72, 0.2) 100%);
+  background-color: #d2d2d2;
   font-family: Calibri;
   font-size: 18px;
   transition: box-shadow .2s;
@@ -272,7 +267,11 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   transition: box-shadow .2s;
 }
 .popup-main__btn-main:hover {
+  cursor: auto;
+}
+.popup-main__btn-main.activeBtn:hover {
   box-shadow: none;
+  cursor: pointer;
 }
 .popup-main__right {
   background-color: #2c2a2b;
@@ -333,7 +332,6 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
 }
 .popup-main__manager-question {
   width: 218px;
-  /* height: 86px; */
   margin-top: 18px;
   display: flex;
   padding: 30px 32px 30px 21px;
@@ -381,17 +379,14 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
 .bonus {
   width: 218px;
   height: 78px;
-  //background: url('./../img/bonusBG.png');
+  background: url('./../img/bonusBG.png');
+  background-size: cover;
   background-color: #2a2c3a;
-  padding: 20px 0 0 19px;
-  border: 1px solid #756e72;
+  padding: 18px 0 0 19px;
+  //border: 1px solid #756e72;
   border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  -webkit-border-radius: 3px;
   position: relative;
+  text-decoration: none;
 }
 .bonus__text {
   color: #fff;
@@ -403,6 +398,7 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
 }
 .bonus__text span {
   font-size: 19px;
+  padding-bottom: 2px;
   display: block;
   font-weight: 400;
 }
@@ -448,6 +444,7 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   margin-bottom: 35px;
 }
 .popup-second__description {
+  display: none;
   color: #2b2e3b;
   font-family: "MuseoSans";
   font-size: 18px;
@@ -455,6 +452,10 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   letter-spacing: 0.45px;
   text-align: center;
   margin-bottom: 30px;
+}
+.popup-second__bonus-text {
+  width: 660px;
+  text-align: center;
 }
 .popup-second__finalClose {
   cursor: pointer;
@@ -497,11 +498,9 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   cursor: pointer;
   width: 280px;
   height: 56px;
-  box-shadow: 0 3px 24px rgba(254, 83, 57, 0.4);
   border-radius: 16px;
-  background-color: gray;
-  // background-color: #dda33d;
-  // background-image: linear-gradient(to top, rgba(254, 83, 57, 0.2) 0%, rgba(228, 204, 72, 0.2) 100%);
+  text-align: center;
+  background-color: #d2d2d2;
   color: #ffffff;
   font-family: Calibri;
   font-size: 20px;
@@ -510,7 +509,12 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   margin-bottom: 35px;
 }
 .popup-second__submit:hover {
+  cursor: auto;
+}
+.popup-second__submit.activeBtn:hover {
   box-shadow: none;
+  cursor: pointer;
+  background: #f08c20;
 }
 .popup-second__hint {
   text-align: center;
@@ -550,7 +554,7 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   display: none;
   flex-direction: column;
   align-items: center;
-  padding: 56px 78px 85px 77px;
+  padding: 70px 78px 50px 75px;
 }
 .popup-second__header--preSecond {
 
@@ -559,7 +563,8 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   display: block;
 }
 .popup-second__bonus-text--preSecond {
-
+  font-size: 14px;
+  padding-bottom: 17px;
 }
 .popup-second__submit--preSecond {
   margin-top: 38px;
@@ -578,6 +583,11 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   background-color: #fff;
 }
 .spinner div {
+  margin-top: -30px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
   width: 50%;
   min-width: 200px;
   height: 50%;
@@ -606,7 +616,7 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   width: 14px;
   height: 14px;
   left: 6px;
-  bottom: 13px;
+  top: 12px;
   content: '';
   position: absolute;
   background-size: 100%;
@@ -617,8 +627,26 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
   -o-border-radius: 50px;
 }
 .activeBtn {
+  box-shadow: 0 3px 24px rgba(254, 83, 57, 0.4);
   background-color: #dda33d;
   background-image: linear-gradient(0deg,rgba(254,83,57,.2) 0,rgba(228,204,72,.2));
+  transition: box-shadow .3s ease-out, opacity .3s ease-out, -webkit-box-shadow .3s ease-out;
+  -webkit-transition: box-shadow .3s ease-out, opacity .3s ease-out, -webkit-box-shadow .3s ease-out;
+  -moz-transition: box-shadow .3s ease-out, opacity .3s ease-out, -webkit-box-shadow .3s ease-out;
+  -ms-transition: box-shadow .3s ease-out, opacity .3s ease-out, -webkit-box-shadow .3s ease-out;
+  -o-transition: box-shadow .3s ease-out, opacity .3s ease-out, -webkit-box-shadow .3s ease-out;
+}
+.activeBtn:hover {
+  background: #f08c20;
+}
+.popup-main__label--policy {
+  margin-top: -20px;
+}
+.popup-main__label--policy:after,
+.popup-main__label--policy:before {
+  bottom: auto;
+  top: 50% !important;
+  transform: translateY(-50%);
 }
 @media (max-width: 980px) {
   .popup-main__right {
@@ -664,6 +692,10 @@ input[type=radio].popup-main__radio--multiply[checked1='2'] + label:after {
     flex-direction: column;
     align-items: center;
   }
+}
+.popup-main__btn {
+  width: 660px;
+  text-align: center;
 }
 @media (max-width: 380px) {
   .popup-main__btn-prev {
