@@ -85,10 +85,10 @@ $(function() {
       [],
       ['Для проживания', 'Для инвестиций', 'Все варианты'],
       ['В пределах МКАД', 'ЦАО', 'Запад', ' Восток', 'Север', 'Юг', 'Неважно'],
-      ['20-60 м2', '60-100 м2', '100-140 м2', '140-180 м2', '180-220 м2', '220-260 м2', '260-300 м2;', '300+ м2'],
+      ['до 20 м2', '20-40 м2', '40-70 м2', '70-100 м2', '100-150 м2', '150+ м2'],
       ['Студия', '1 спальня', '2 спальни', '3+'],
       ['Готовая отделка', 'Двухуровневый', 'Рядом метро', 'Близость к центру', 'Есть паркинг', 'Рядом парки', 'Рядом арт-объекты'],
-      ['Нужен уже сданный', 'Будет сдан в 2019', 'Не имеет значения', 'Не более 6 месяцев', 'Будет сдан в 2020'],
+      ['Не более 6 мес', 'В 2019', 'В 2020', 'Нужен сданный', 'Не имеет значения'],
       ['4 - 10 млн. руб', '10 - 50 млн. руб', '100 - 150 млн. руб', '150 - 220 млн. руб', '200 - 250 млн. руб', '250+'],
       ['Наличные', 'Ипотека', 'Рассрочка', 'Другое']
     ],
@@ -154,6 +154,7 @@ $(function() {
         if (!sessionStorage.getItem(`i${popupLogic.status}`)) {
           return;
         }
+
         let cache = sessionStorage.getItem(`i${popupLogic.status}`).split(','),
           allRadios = document.querySelectorAll('.popup-main__radio');
 
@@ -189,7 +190,7 @@ $(function() {
         popupLogic.preFinal();
         return;
       }
-      if (popupLogic.status > 1) {
+      if (popupLogic.status > 0) {
         let radiosWrapper = document.querySelector('.popup-main__radios');
 
         popupLogic.saveCache();
@@ -225,35 +226,45 @@ $(function() {
         doActiveBtn(checkBoxes);
       }
 
-      if (popupLogic.status > 1 && popupLogic.status <= 9) {
+      if (
+        popupLogic.status > 1 && 
+        popupLogic.status <= 9 &&
+        popupLogic.status !== 3
+        ) {
         confirmBtn.removeEventListener('click', popupLogic.next);
         confirmBtn.classList.remove('activeBtn');
         let radios = document.querySelectorAll('.popup-main__radio');
 
-        doActiveBtn(radios);
+        popupLogic.status > 3 ? doActiveBtn(radios, true) : doActiveBtn(radios);
       }
 
       if (popupLogic.status === 11) {
-        let confirmBtn = document.querySelectorAll('.popup-second__submit')[1];
+        let confirmBtn = document.querySelector('.popup-second__submit');
         confirmBtn.classList.remove('activeBtn');
 
         let checkbox = document.querySelector('#lastInpt'),
           input = document.querySelector('.input--phone');
 
-        if (input.value[input.value.length - 2] >= 0) {
-          checkbox.checked = true;
+        if (~input.value.search(/\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}/) && checkbox.checked == true) {
           confirmBtn.classList.add('activeBtn');
         }
 
       }
 
-      function doActiveBtn(checkBoxes) {
+      function doActiveBtn(checkBoxes, radio = false) {
         for (checkbox of checkBoxes) {
-          if (checkbox.classList.contains('active') ||
-              checkbox.checked == true ||
-              checkbox.getAttribute('checked1') == 1) {
-            confirmBtn.classList.add('activeBtn');
-            confirmBtn.addEventListener('click', popupLogic.next);
+          if (radio) {
+            if (checkbox.getAttribute('checked1') == 1) {
+              confirmBtn.classList.add('activeBtn');
+              confirmBtn.addEventListener('click', popupLogic.next);
+            }
+          } else {
+            if (checkbox.classList.contains('active') ||
+            checkbox.checked == true ||
+            checkbox.getAttribute('checked1') == 1) {
+              confirmBtn.classList.add('activeBtn');
+              confirmBtn.addEventListener('click', popupLogic.next);
+            }
           }
         }
       }
@@ -377,9 +388,9 @@ $(function() {
     //Запускает предпоследнее окно с вводом номера
     //Создает массив на отправку
     preFinal() {
-      let phonePopup = document.querySelectorAll('.popup-second')[1],
+      let phonePopup = document.querySelector('.popup-second'),
           spinner = document.querySelector('.spinner'),
-          thnxPopup = document.querySelector('.popup-second--preSecond'),
+          // thnxPopup = document.querySelector('.popup-second--preSecond'),
           temp,
           tempArr,
           sendArray = [];
@@ -391,16 +402,16 @@ $(function() {
         setTimeout(function() {
           close.style.display = 'block';
           spinner.style.display = 'none';
-          thnxPopup.style.display = 'flex';
+          phonePopup.style.display = 'block';
           ++popupLogic.status;
 
-          let confirm = document.querySelector('.popup-second__submit--preSecond');
+          // let confirm = document.querySelector('.popup-second__submit--preSecond');
 
-          confirm.addEventListener('click', function() {
-            thnxPopup.style.display = 'none';
-            popupLogic.preFinal();
-          });
-        }, 6000);
+          // confirm.addEventListener('click', function() {
+            // thnxPopup.style.display = 'none';
+            // popupLogic.preFinal();
+          // });
+        }, 2000);
         return;
       } else {
         document.addEventListener('keydown', popupLogic.setBtnActive);
@@ -420,15 +431,16 @@ $(function() {
           }
         }
         popupLogic.arrToSend = sendArray;
+        sessionStorage.clear();
       }
     },
     //Запускает последнее окно, закрывая все предыдущие
     final() {
       $('.popup-second').css({'height' : '360px', 'padding' : '55px 10px 111px 10px'});
       let form = document.querySelector('.popup-second__form'),
-        description = document.querySelectorAll('.popup-second__description')[1],
-        header = document.querySelectorAll('.popup-second__header')[1],
-        bonus = document.querySelectorAll('.bonus')[1],
+        description = document.querySelector('.popup-second__description'),
+        header = document.querySelector('.popup-second__header'),
+        bonus = document.querySelector('.bonus'),
         bonusText = document.querySelector('.popup-second__bonus-text'),
         lastLabel = document.querySelector('#lastLabel');
 
@@ -452,14 +464,15 @@ $(function() {
         if ($input.getAttribute('checked1')) {
           if ($input.getAttribute('checked1') === '1') {
             $input.setAttribute('checked1', 2)
+            popupLogic.setBtnActive();
           }
           else {
             $input.setAttribute('checked1', 1)
+            popupLogic.setBtnActive();
           }
           return;
         }
         $input.setAttribute('checked1', 1)
-
       }
 
       $('.popup-main__radio--multiply').on('click', select);
