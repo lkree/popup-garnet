@@ -7,11 +7,12 @@ $(function() {
   $('.js-start').fancybox({
     clickSlide: false,
     touch: false,
+    beforeClose: function(){sessionStorage.clear()}
   });
 
   $(".input--phone").mask("+7 (999) 999-99-99");
 
-  $(document).on('submit', '.popup-second__form', function(e) {
+  $(document).on('click', '.popup-second__submit', function(e) {
     e.preventDefault();
     sessionStorage.phone = $(".input--phone").val();
     let data = JSON.stringify(sessionStorage);
@@ -476,10 +477,6 @@ $(function() {
       }
 
       $('.popup-main__radio--multiply').on('click', select);
-    },
-
-    clearStorage(evt) {
-      sessionStorage.clear();
     }
   };
 
@@ -488,8 +485,4 @@ $(function() {
 
   startupButton.addEventListener('click', popupLogic.next);
   prevButton.addEventListener('click', popupLogic.prev);
-  $('.form-anketa').fancybox({
-    'beforeClose': popupLogic.clearStorage,
-    'closeClick': true
-  });
 });
