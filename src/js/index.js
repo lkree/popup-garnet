@@ -476,6 +476,10 @@ $(function() {
       }
 
       $('.popup-main__radio--multiply').on('click', select);
+    },
+
+    clearStorage(evt) {
+      sessionStorage.clear();
     }
   };
 
@@ -484,4 +488,8 @@ $(function() {
 
   startupButton.addEventListener('click', popupLogic.next);
   prevButton.addEventListener('click', popupLogic.prev);
+  $('.form-anketa').fancybox({
+    'beforeClose': popupLogic.clearStorage,
+    'closeClick': true
+  });
 });
