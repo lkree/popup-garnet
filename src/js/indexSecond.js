@@ -167,7 +167,6 @@ $(function() {
     //Сохраняет кэш, подгружает кэш, удаляет разного рода элементы, при переходах от слайда к слайду
     //Запускает рендер
     next() {
-      console.log(popupLogic.status);
       if (popupLogic.status === 0) {
         ++status;
         popupLogic.render();
@@ -205,7 +204,8 @@ $(function() {
           checkbox;
 
       if (popupLogic.status === 0) {
-        confirmBtn.classList.add('activeBtn');        confirmBtn.addEventListener('click', popupLogic.next);
+        confirmBtn.classList.add('activeBtn');
+        confirmBtn.addEventListener('click', popupLogic.next);
       }
 
       if (popupLogic.status === 1) {
@@ -218,16 +218,17 @@ $(function() {
 
       if (
         popupLogic.status > 1 && 
-        popupLogic.status <= 6
+        popupLogic.status <= 5
         ) {
         confirmBtn.removeEventListener('click', popupLogic.next);
         confirmBtn.classList.remove('activeBtn');
         let radios = document.querySelectorAll('.popup-main__radio');
 
         popupLogic.status > 3 ? doActiveBtn(radios, true) : doActiveBtn(radios);
+        popupLogic.status > 4 ? doActiveBtn(radios, false) : undefined;
       }
 
-      if (popupLogic.status === 7) {
+      if (popupLogic.status === 8) {
         let confirmBtn = document.querySelector('.popup-second__submit');
         confirmBtn.classList.remove('activeBtn');
 
@@ -388,13 +389,6 @@ $(function() {
           spinner.style.display = 'none';
           phonePopup.style.display = 'block';
           ++popupLogic.status;
-
-          // let confirm = document.querySelector('.popup-second__submit--preSecond');
-
-          // confirm.addEventListener('click', function() {
-            // thnxPopup.style.display = 'none';
-            // popupLogic.preFinal();
-          // });
         }, 2000);
         return;
       } else {
