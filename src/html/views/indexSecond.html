@@ -1,0 +1,103 @@
+<% var data = {
+  title: "Заголовок | Проект",
+  author: ""
+}; %>
+<%= _.template(require('./../includes/header.html'))(data) %>
+
+<a class="js-start" href="#form" data-fancybox> Открыть </a>
+<div id="form" class="form form-anketa"
+  style="display: none"
+>
+  <section class="popup-main">
+    <div class="popup-main__left">
+      <div class="popup-main__page"></div>
+      <h1 class="popup-main__header">Подберите 7 лучших предложений
+          для инвестиций в недвижимость Москвы</h1>
+      <div class="popup-main__content">
+        <p class="first-p">Пройдите тест и получите бесплатно подборку объектов по вашим параметрам</p>
+        <div class="popup-main__messengers">
+          <a class="popup-main__whatsup popup-main__messenger">
+            <img src="./img/whatsup.png" alt="">
+            <div>Whats app</div>
+          </a>
+          <a class="popup-main__viber popup-main__messenger">
+            <img src="./img/viber.png" alt="">
+            <div>Viber</div>
+          </a>
+          <a class="popup-main__telegram popup-main__messenger">
+            <img src="./img/telegram.png" alt="">
+            <div>Telegram</div>
+          </a>
+        </div>
+        <div class="popup-main__radios">
+        </div>
+      </div>
+      <div class="popup-main__btn">
+      <button class="popup-main__btn-prev">Назад</button>
+      <button class="popup-main__btn-main activeBtn">Подобрать объекты</button>
+    </div>
+    </div>
+    <div class="popup-main__right">
+      <div class="popup-main__manager">
+        <div class="popup-main__manager-photo"></div>
+        <div class="popup-main__manager-info">
+          <span class="popup-main__manager-name">Виктория Чистова</span>
+          <span class="popup-main__manager-status">Ваш консультант</span>
+        </div>
+      </div>
+      <div class="popup-main__manager-question">
+        <p>Здравствуйте! Я прокомментирую для вас вопросы и варианты ответов.</p>
+        <div>
+          <svg height="12" width="20">
+              <path d="m0 20 h20 l -10 -20 z" fill="transparent" stroke="#5b5759" />
+          </svg>
+        </div>
+      </div>
+      <div class="popup-main__bonus">
+        <p class="popup-main__bonus-text">Бонусы после прохождения теста:</p>
+          <a class="bonus">
+            <p class="bonus__text"><span>Каталог</span> объектов</p>
+            <div class="bonus__closeIcon"></div>
+          </a>
+      </div>
+    </div>
+  </section>
+  <section class="spinner">
+    <div></div>
+  </section>
+  <!-- <section class="popup-second popup-second--preSecond"> -->
+    <!-- <div class="popup-second__header popup-second__header--preSecond">
+        Спасибо за ответы!
+    </div> -->
+    <!-- <p class="popup-second__description popup-second__description--preSecond">
+        В нашей базе есть лофты по вашим параметрам &mdash; подборка уже формируется. Осталось узнать ваш номер телефона для отправки ее в мессенджер.
+    </p> -->
+    <!-- <p class="popup-second__bonus-text popup-second__bonus-text--preSecond">Получите ваши бонусы далее:</p> -->
+    <!-- <a class="bonus">
+      <p class="bonus__text"><span>Каталог</span> лофтов Москвы</p>
+      <div class="bonus__closeIcon"></div>
+    </a>
+    <button class="popup-second__submit popup-second__submit--preSecond activeBtn">Оставить номер</button>
+  </section> -->
+  <section class="popup-second">
+    <div class="popup-second__main">
+      <div class="popup-second__header">Оставьте номер телефона для отправки результата</div>
+      <p class="popup-second__description">Спасибо! Ваша зявка уже в работе,<br> подборка будет готова сегодня.</p>
+      <form class="popup-second__form" action="" method="POST">
+        <input required class="popup-second__input input--phone" type="tel" placeholder="+7 (___) ___-__-__">
+        <button class="popup-second__submit">Получить подборку</button>
+      </form>
+      <input type="radio" class="popup-main__radio" id="lastInpt">
+      <label for="lastInpt" class="popup-main__label popup-main__label--policy" id="lastLabel">
+        С политикой конфеденциальности ознакомлен
+      </label>
+      <p class="popup-second__bonus-text">Ваши бонусы:</p>
+      <a class="bonus">
+        <p class="bonus__text"><span>Каталог</span> объектов</p>
+        <div class="bonus__closeIcon"></div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<%= _.template(require('./../includes/footer.html'))(data) %>
