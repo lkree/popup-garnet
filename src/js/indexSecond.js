@@ -44,12 +44,12 @@ $(function() {
     //Массив заголовков
     headers: [
       'Подберите 7 лучших предложений для инвестиций в недвижимость Москвы',
-      'В какой мессенджер вам прислать подборку',
+      'В какой мессенджер вам прислать подборку?',
       'Сколько вы хотите вложить?',
-      'Выберите направление инвестирования?',
+      'Выберите направление инвестирования',
       'Типы объектов для инвестирования',
-      'Источник средств для инвестирования',
-      'Рассмотрите ли варианты совместного инвестирования с нами или другими инвесторами',
+      'Источник средств для инвестиций?',
+      'Рассмотрите ли варианты совместного инвестирования с нами или другими инвесторами?',
     ],
     //Массив речей менеджера
     managerSpeachs: [
@@ -216,16 +216,21 @@ $(function() {
         doActiveBtn(checkBoxes);
       }
 
+
       if (
-        popupLogic.status > 1 && 
-        popupLogic.status <= 5
+        popupLogic.status !== 5 &&
+        popupLogic.status > 1 &&
+        popupLogic.status < 7
         ) {
         confirmBtn.removeEventListener('click', popupLogic.next);
         confirmBtn.classList.remove('activeBtn');
         let radios = document.querySelectorAll('.popup-main__radio');
 
-        popupLogic.status > 3 ? doActiveBtn(radios, true) : doActiveBtn(radios);
-        popupLogic.status > 4 ? doActiveBtn(radios, false) : undefined;
+        if (popupLogic.status === 3 || popupLogic.status === 4) {
+          doActiveBtn(radios, true);
+        } else {
+          doActiveBtn(radios, false);
+        }
       }
 
       if (popupLogic.status === 8) {
@@ -351,7 +356,7 @@ $(function() {
 
       if (popupLogic.status === 0) {
         contentPar.setAttribute('style', 'display: block');
-        goOnButton.textContent = 'Начать';
+        goOnButton.textContent = 'Подобрать объекты';
       }
 
       if (popupLogic.status === 1) {
