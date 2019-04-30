@@ -216,7 +216,6 @@ $(function() {
         doActiveBtn(checkBoxes);
       }
 
-
       if (
         popupLogic.status !== 5 &&
         popupLogic.status > 1 &&
@@ -233,15 +232,24 @@ $(function() {
         }
       }
 
+      if (popupLogic.status === 5) {
+        confirmBtn.classList.add('activeBtn');
+        confirmBtn.addEventListener('click', popupLogic.next);
+      }
+
       if (popupLogic.status === 8) {
+        document.addEventListener('keyup', popupLogic.setBtnActive);
+
         let confirmBtn = document.querySelector('.popup-second__submit');
         confirmBtn.classList.remove('activeBtn');
+        confirmBtn.setAttribute('disabled', '');
 
         let checkbox = document.querySelector('#lastInpt'),
           input = document.querySelector('.input--phone');
 
         if (~input.value.search(/\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}/) && checkbox.checked == true) {
           confirmBtn.classList.add('activeBtn');
+          confirmBtn.removeAttribute('disabled');
         }
 
       }
@@ -394,11 +402,11 @@ $(function() {
           spinner.style.display = 'none';
           phonePopup.style.display = 'block';
           ++popupLogic.status;
+          popupLogic.preFinal();
         }, 2000);
         return;
       } else {
-        document.addEventListener('keydown', popupLogic.setBtnActive);
-        phonePopup.setAttribute('style', 'display: block');
+        // phonePopup.setAttribute('style', 'display: block');
         // bonus.style.display = 'none';
   
         for (let i = 0; i < 7; i++) {

@@ -239,15 +239,24 @@ $(function() {
         popupLogic.status > 3 ? doActiveBtn(radios, true) : doActiveBtn(radios);
       }
 
+      if (popupLogic.status === 4) {
+        confirmBtn.classList.add('activeBtn');
+        confirmBtn.addEventListener('click', popupLogic.next);
+      }
+
       if (popupLogic.status === 11) {
+        document.addEventListener('keyup', popupLogic.setBtnActive);
+
         let confirmBtn = document.querySelector('.popup-second__submit');
         confirmBtn.classList.remove('activeBtn');
+        confirmBtn.setAttribute('disabled', '');
 
         let checkbox = document.querySelector('#lastInpt'),
-          input = document.querySelector('.input--phone');
+            input = document.querySelector('.input--phone');
 
         if (~input.value.search(/\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}/) && checkbox.checked == true) {
           confirmBtn.classList.add('activeBtn');
+          confirmBtn.removeAttribute('disabled');
         }
 
       }
@@ -410,13 +419,13 @@ $(function() {
 
           // confirm.addEventListener('click', function() {
             // thnxPopup.style.display = 'none';
-            // popupLogic.preFinal();
+            popupLogic.preFinal();
           // });
         }, 2000);
         return;
       } else {
-        document.addEventListener('keydown', popupLogic.setBtnActive);
-        phonePopup.setAttribute('style', 'display: block');
+        this.setBtnActive();
+        // phonePopup.setAttribute('style', 'display: block');
         // bonus.style.display = 'none';
   
         for (let i = 0; i < 10; i++) {
